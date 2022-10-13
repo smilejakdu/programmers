@@ -4,6 +4,9 @@
 1. [두개뽑아서더하기](#두개뽑아서더하기)
 2. [2016](#2016)
 3. [포켓몬찾기](#포켓몬찾기)
+4. [모의고사](#모의고사)
+5. [소수만들기](#소수만들기)
+6. [실패율](#실패율)
 
 
 ## 두개뽑아서더하기
@@ -126,15 +129,138 @@ nums	        result
 
 ```typescript
 function solution(nums:number[]): number {
-    let result = 0;
     const set = new Set(nums);
     console.log(set); // Set(3) { 3, 1, 2 }
     const arr = Array.from(set);
     console.log(arr); // [3,1,2]
 
-    result = arr.length > nums.length/2 ? nums.length/2 : arr.length;
-    return result;
+    return arr.length > nums.length/2 ? nums.length/2 : arr.length;
 }
 
 console.log(solution([3,1,2,3]));
+```
+
+## 모의고사
+```markdown
+문제 설명
+수포자는 수학을 포기한 사람의 준말입니다.
+수포자 삼인방은 모의고사에 수학 문제를 전부 찍으려 합니다.
+수포자는 1번 문제부터 마지막 문제까지 다음과 같이 찍습니다.
+
+1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ...
+2번 수포자가 찍는 방식: 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, ...
+3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, ...
+
+1번 문제부터 마지막 문제까지의 정답이 순서대로 들은 배열 answers가 주어졌을 때, 가장 많은 문제를 맞힌 사람이 누구인지 배열에 담아 return 하도록 solution 함수를 작성해주세요.
+
+제한 조건
+시험은 최대 10,000 문제로 구성되어있습니다.
+문제의 정답은 1, 2, 3, 4, 5중 하나입니다.
+가장 높은 점수를 받은 사람이 여럿일 경우, return하는 값을 오름차순 정렬해주세요.
+
+입출력                 예
+answers	            return
+[1,2,3,4,5]	        [1]
+[1,3,2,4,2]	        [1,2,3]
+
+입출력 예 설명
+입출력 예 #1
+
+수포자 1은 모든 문제를 맞혔습니다.
+수포자 2는 모든 문제를 틀렸습니다.
+수포자 3은 모든 문제를 틀렸습니다.
+따라서 가장 문제를 많이 맞힌 사람은 수포자 1입니다.
+
+입출력 예 #2
+모든 사람이 2문제씩을 맞췄습니다.
+```
+
+python 문제풀이
+```python
+def solution(answers):
+    supo_list    = [[1, 2, 3, 4, 5],
+                    [2, 1, 2, 3, 2, 4, 2, 5],
+                    [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]]
+
+    answer_list  = [0 , 0 , 0]
+
+    for index in range(0 , len(answers)):
+        if supo_list[0][index % len(supo_list[0])] == answers[index]:
+            answer_list[0] += 1
+
+        if supo_list[1][index % len(supo_list[1])] == answers[index]:
+            answer_list[1] += 1
+
+        if supo_list[2][index % len(supo_list[2])] == answers[index]:
+            answer_list[2] += 1
+
+    max_number  = max(answer_list)
+    result_list = []
+
+    for index in range(0 , len(answer_list)):
+        if max_number == answer_list[index]:
+            result_list.append(index + 1)
+
+    return result_list
+```
+
+```typescript
+function solution(nums:number[]) :number[] {
+    let answer = [];
+    let count = [0,0,0];
+    
+    let first  = [1,2,3,4,5];
+    let second = [2,1,2,3,2,4,2,5];
+    let third  = [3,3,1,1,2,2,4,4,5,5];
+
+    for(let i = 0; i < nums.length; i++) {
+        if(nums[i] === first[i % first.length]) count[0]++;
+        if(nums[i] === second[i % second.length]) count[1]++;
+        if(nums[i] === third[i % third.length]) count[2]++;
+    }
+    
+    let max = Math.max(...count);
+    for(let i = 0; i < count.length; i++) {
+        if(count[i] === max) answer.push(i+1);
+    }
+    return answer;
+}
+
+console.log(solution([1,2,3,4,5])); // [1]
+```
+
+## 소수만들기
+
+```typescript
+function isPrime(num: number): boolean {
+  if (num === 1) return false;
+  for (let i = 2; i < num; i++) {
+    if (num % i === 0) return false;
+  }
+  return true;
+}
+
+function solution(nums: number[]): number {
+  let result = 0;
+  const dfs = (index: number, sum: number, count: number) => {
+    if (count === 3) {
+      if (isPrime(sum)) result++;
+      return;
+    }
+    for (let i = index; i < nums.length; i++) {
+      dfs(i + 1, sum + nums[i], count + 1);
+    }
+  };
+  dfs(0, 0, 0);
+  return result;
+}
+
+console.log(solution([1,2,7,6,4])); // 1
+```
+
+## 실패율
+
+```typescript
+
+
 ```
