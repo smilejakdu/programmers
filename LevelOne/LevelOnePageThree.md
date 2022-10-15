@@ -8,6 +8,7 @@
 5. [소수만들기](#소수만들기)
 6. [실패율](#실패율)
 7. [체육복](#체육복)
+8. [삼총사](#삼총사)
 
 
 ## 두개뽑아서더하기
@@ -234,7 +235,11 @@ console.log(solution([1,2,3,4,5])); // [1]
 
 ```markdown
 문제 설명
-주어진 숫자 중 3개의 수를 더했을 때 소수가 되는 경우의 개수를 구하려고 합니다. 숫자들이 들어있는 배열 nums가 매개변수로 주어질 때, nums에 있는 숫자들 중 서로 다른 3개를 골라 더했을 때 소수가 되는 경우의 개수를 return 하도록 solution 함수를 완성해주세요.
+주어진 숫자 중 3개의 수를 더했을 때
+소수가 되는 경우의 개수를 구하려고 합니다.
+
+숫자들이 들어있는 배열 nums가 매개변수로 주어질 때,
+nums에 있는 숫자들 중 서로 다른 3개를 골라 더했을 때 소수가 되는 경우의 개수를 return 하도록 solution 함수를 완성해주세요.
 
 제한사항
 nums에 들어있는 숫자의 개수는 3개 이상 50개 이하입니다.
@@ -243,6 +248,11 @@ nums의 각 원소는 1 이상 1,000 이하의 자연수이며, 중복된 숫자
 nums	        result
 [1,2,3,4]	    1
 [1,2,7,6,4]	    4
+```
+
+```markdown
+문제를 읽었을때 서로다른 3개를 골라 더했을때 소수가 되는 경우의 개수를 구하는 문제이다.
+찾아보니 에라토스테네스의 체라는 개념이 존재했다.
 ```
 
 ```typescript
@@ -255,6 +265,7 @@ function isPrime(num: number): boolean {
 }
 
 function solution(nums: number[]): number {
+  const sumList: number[] = [];
   let result = 0;
   const dfs = (index: number, sum: number, count: number) => {
     if (count === 3) {
@@ -322,7 +333,6 @@ function solution(
   const students = new Array(n).fill(1);
   lost.forEach((l) => students[l - 1]--);
   reserve.forEach((r) => students[r - 1]++);
-  console.log(students);
 
   students.forEach((s, i) => {
     if (s === 0) {
@@ -341,3 +351,48 @@ function solution(
 
 console.log(solution(6,[2,3,4,5],[1,3,5])); // 5
 ```
+
+## 삼총사
+
+```markdown
+한국중학교에 다니는 학생들은 각자 정수 번호를 갖고 있습니다.
+이 학교 학생 3명의 정수 번호를 더했을 때 0이 되면 3명의 학생은 삼총사라고 합니다.
+예를 들어, 5명의 학생이 있고,
+각각의 정수 번호가 순서대로 -2, 3, 0, 2, -5일 때, 첫 번째, 세 번째, 네 번째 학생의 정수 번호를 더하면 0이므로 세 학생은 삼총사입니다.
+또한, 두 번째, 네 번째, 다섯 번째 학생의 정수 번호를 더해도 0이므로 세 학생도 삼총사입니다.
+따라서 이 경우 한국중학교에서는 두 가지 방법으로 삼총사를 만들 수 있습니다.
+
+한국중학교 학생들의 번호를 나타내는 정수 배열 number가 매개변수로 주어질 때,
+학생들 중 삼총사를 만들 수 있는 방법의 수를 return 하도록 solution 함수를 완성하세요.
+
+제한사항
+3 ≤ number의 길이 ≤ 13
+-1,000 ≤ number의 각 원소 ≤ 1,000
+서로 다른 학생의 정수 번호가 같을 수 있습니다.
+입출력 예
+number	                  result
+[-2, 3, 0, 2, -5]	        2
+[-3, -2, -1, 0, 1, 2, 3]	5
+[-1, 1, -1, 1]	          0
+```
+
+```ts
+function solution(number:number[]) {
+  let result = 0;
+  for (let i = 0; i < number.length; i++) {
+    for (let j = i + 1; j < number.length; j++) {
+      for (let k = j + 1; k < number.length; k++) {
+        if (number[i] + number[j] + number[k] === 0) {
+          result++;
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+console.log(solution([-2, 3, 0, 2, -5])); // 2
+```
+위와 같이 풀었는데 , 이렇게 푸는게 맞나...? 생각을 했다.
+반복문 3번 도는것보다 다르게 푸는 방법이 있다면 그렇게 푸는방법 없을까 고민을 많이했던 문제다
