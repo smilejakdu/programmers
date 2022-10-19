@@ -63,3 +63,15 @@ s	                        return
 "3people unFollowed me"	    "3people Unfollowed Me"
 "for the last week"	        "For The Last Week"
 ```
+
+```ts
+function solution(s: string): string {
+  return s.split(' ').map((word) => {
+    const first = word[0].toUpperCase()
+    const rest = word.slice(1).toLowerCase()
+    return first + rest
+  }).join(' ')
+}
+
+console.log(solution("3people unFollowed me"));
+```
