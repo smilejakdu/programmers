@@ -17,6 +17,7 @@
 14. [멀리뛰기](#멀리뛰기)
 15. [캐시](#캐시)
 16. [H-Index](#H-Index)
+17. [괄호회전하기](#괄호회전하기)
 
 ## 최댓값과최소값
 ```markdown
@@ -668,13 +669,15 @@ console.log(solution(3, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pa
 ```markdown
 H-Index
 문제 설명
-H-Index는 과학자의 생산성과 영향력을 나타내는 지표입니다. 어느 과학자의 H-Index를 나타내는 값인 h를 구하려고 합니다.
+H-Index는 과학자의 생산성과 영향력을 나타내는 지표입니다.
+어느 과학자의 H-Index를 나타내는 값인 h를 구하려고 합니다.
 위키백과1에 따르면, H-Index는 다음과 같이 구합니다.
 
 어떤 과학자가 발표한 논문 n편 중,
 h번 이상 인용된 논문이 h편 이상이고 나머지 논문이 h번 이하 인용되었다면 h의 최댓값이 이 과학자의 H-Index입니다.
 
-어떤 과학자가 발표한 논문의 인용 횟수를 담은 배열 citations가 매개변수로 주어질 때, 이 과학자의 H-Index를 return 하도록 solution 함수를 작성해주세요.
+어떤 과학자가 발표한 논문의 인용 횟수를 담은 배열 citations가 매개변수로 주어질 때,
+이 과학자의 H-Index를 return 하도록 solution 함수를 작성해주세요.
 
 제한사항
 과학자가 발표한 논문의 수는 1편 이상 1,000편 이하입니다.
@@ -688,6 +691,7 @@ citations	      return
 function solution(citations: number[]) {
   let result = 0;
   const sortedCitations = citations.sort((a, b) => b - a);
+  // 내림차순으로 정렬한다.
 
   for (let i = 0; i < sortedCitations.length; i++) {
     if (sortedCitations[i] >= i + 1) {
@@ -700,3 +704,35 @@ function solution(citations: number[]) {
 
 console.log(solution([3, 0, 6, 1, 5])); // 3
 ```
+
+## 괄호회전하기
+
+```markdown
+괄호 회전하기
+문제 설명
+다음 규칙을 지키는 문자열을 올바른 괄호 문자열이라고 정의합니다.
+
+(), [], {} 는 모두 올바른 괄호 문자열입니다.
+만약 A가 올바른 괄호 문자열이라면, (A), [A], {A} 도 올바른 괄호 문자열입니다.
+예를 들어, [] 가 올바른 괄호 문자열이므로, ([]) 도 올바른 괄호 문자열입니다.
+만약 A, B가 올바른 괄호 문자열이라면, AB 도 올바른 괄호 문자열입니다.
+예를 들어, {} 와 ([]) 가 올바른 괄호 문자열이므로, {}([]) 도 올바른 괄호 문자열입니다.
+대괄호, 중괄호, 그리고 소괄호로 이루어진 문자열 s가 매개변수로 주어집니다.
+이 s를 왼쪽으로 x (0 ≤ x < (s의 길이)) 칸만큼 회전시켰을 때
+s가 올바른 괄호 문자열이 되게 하는 x의 개수를 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+s의 길이는 1 이상 1,000 이하입니다.
+입출력 예
+s	result
+"[](){}"	3
+"}]()[{"	2
+"[)(]"	0
+"}}}"	0
+```
+`Queue 와 Stack` 문제가 아닐까 ?? 하고 문제를 풀었다.
+
+```ts
+
+```
+
