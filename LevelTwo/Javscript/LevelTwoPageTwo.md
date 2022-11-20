@@ -9,7 +9,6 @@
 
 ## 위장
 
-[위장](https://programmers.co.kr/learn/courses/30/lessons/42578) 문제를 풀어보자.
 ```markdown
 위장
 문제 설명
